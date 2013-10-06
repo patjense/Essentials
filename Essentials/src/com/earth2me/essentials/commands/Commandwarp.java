@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 
@@ -35,7 +35,7 @@ public class Commandwarp extends EssentialsCommand
 			{
 				throw new Exception(_("warpListPermission"));
 			}
-			warpList(user.getBase(), args, user);
+			warpList(user.getSource(), args, user);
 			throw new NoChargeException();
 		}
 		if (args.length > 0)
@@ -54,7 +54,7 @@ public class Commandwarp extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2 || NumberUtil.isInt(args[0]))
 		{
@@ -68,7 +68,7 @@ public class Commandwarp extends EssentialsCommand
 	}
 
 	//TODO: Use one of the new text classes, like /help ?
-	private void warpList(final CommandSender sender, final String[] args, final IUser user) throws Exception
+	private void warpList(final CommandSource sender, final String[] args, final IUser user) throws Exception
 	{
 		final IWarps warps = ess.getWarps();
 		if (warps.isEmpty())

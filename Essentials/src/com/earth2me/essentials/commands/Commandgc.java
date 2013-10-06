@@ -9,7 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 
 
 public class Commandgc extends EssentialsCommand
@@ -20,7 +20,7 @@ public class Commandgc extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		double tps = ess.getTimer().getAverageTPS();
 		ChatColor color;

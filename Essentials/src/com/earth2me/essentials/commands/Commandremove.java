@@ -6,7 +6,7 @@ import java.util.Locale;
 import org.bukkit.Chunk;
 import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.entity.*;
 
 //Todo: Fix this up
@@ -74,11 +74,11 @@ public class Commandremove extends EssentialsCommand
 			}
 		}
 
-		removeEntities(user.getBase(), world, toRemove, radius);
+		removeEntities(user.getSource(), world, toRemove, radius);
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
@@ -105,7 +105,7 @@ public class Commandremove extends EssentialsCommand
 		removeEntities(sender, world, toRemove, 0);
 	}
 
-	protected void removeEntities(final CommandSender sender, final World world, final ToRemove toRemove, int radius) throws Exception
+	protected void removeEntities(final CommandSource sender, final World world, final ToRemove toRemove, int radius) throws Exception
 	{
 		int removed = 0;
 		if (radius > 0)

@@ -5,7 +5,7 @@ import com.earth2me.essentials.User;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.entity.Player;
 
 
@@ -72,7 +72,7 @@ public class Commandnear extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length == 0)
 		{

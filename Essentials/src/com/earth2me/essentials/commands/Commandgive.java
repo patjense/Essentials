@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -22,7 +22,7 @@ public class Commandgive extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 2)
 		{
@@ -32,13 +32,13 @@ public class Commandgive extends EssentialsCommand
 		ItemStack stack = ess.getItemDb().get(args[1]);
 
 		final String itemname = stack.getType().toString().toLowerCase(Locale.ENGLISH).replace("_", "");
-		if (sender instanceof Player
+		if (sender.isPlayer()
 			&& (ess.getSettings().permissionBasedItemSpawn()
-				? (!ess.getUser(sender).isAuthorized("essentials.itemspawn.item-all")
-				   && !ess.getUser(sender).isAuthorized("essentials.itemspawn.item-" + itemname)
-				   && !ess.getUser(sender).isAuthorized("essentials.itemspawn.item-" + stack.getTypeId()))
-				: (!ess.getUser(sender).isAuthorized("essentials.itemspawn.exempt")
-				   && !ess.getUser(sender).canSpawnItem(stack.getTypeId()))))
+				? (!ess.getUser(sender.getPlayer()).isAuthorized("essentials.itemspawn.item-all")
+				   && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.itemspawn.item-" + itemname)
+				   && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.itemspawn.item-" + stack.getTypeId()))
+				: (!ess.getUser(sender.getPlayer()).isAuthorized("essentials.itemspawn.exempt")
+				   && !ess.getUser(sender.getPlayer()).canSpawnItem(stack.getTypeId()))))
 		{
 			throw new Exception(_("cantSpawnItem", itemname));
 		}
@@ -74,7 +74,7 @@ public class Commandgive extends EssentialsCommand
 		{
 			MetaItemStack metaStack = new MetaItemStack(stack);
 			boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments();
-			if (allowUnsafe && sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.enchantments.allowunsafe"))
+			if (allowUnsafe && sender.isPlayer() && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.enchantments.allowunsafe"))
 			{
 				allowUnsafe = false;
 			}

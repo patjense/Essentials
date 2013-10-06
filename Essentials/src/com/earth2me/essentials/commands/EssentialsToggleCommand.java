@@ -4,7 +4,7 @@ import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
 import java.util.List;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.entity.Player;
 
 
@@ -31,14 +31,14 @@ public abstract class EssentialsToggleCommand extends EssentialsCommand
 		return null;
 	}
 
-	protected void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws PlayerNotFoundException, NotEnoughArgumentsException
+	protected void toggleOtherPlayers(final Server server, final CommandSource sender, final String[] args) throws PlayerNotFoundException, NotEnoughArgumentsException
 	{
 		if (args.length < 1 || args[0].trim().length() < 2)
 		{
 			throw new PlayerNotFoundException();
 		}
 
-		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+		boolean skipHidden = sender.isPlayer() && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.vanish.interact");
 		boolean foundUser = false;
 		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
 		for (Player matchPlayer : matchedPlayers)
@@ -73,5 +73,5 @@ public abstract class EssentialsToggleCommand extends EssentialsCommand
 	}
 
 	// Make sure when implementing this method that all 3 Boolean states are handled, 'null' should toggle the existing state.
-	abstract void togglePlayer(CommandSender sender, User user, Boolean enabled) throws NotEnoughArgumentsException;
+	abstract void togglePlayer(CommandSource sender, User user, Boolean enabled) throws NotEnoughArgumentsException;
 }

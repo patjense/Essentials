@@ -6,7 +6,7 @@ import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.FormatUtil;
 import java.util.logging.Level;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.entity.Player;
 
 
@@ -18,7 +18,7 @@ public class Commandkick extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -26,9 +26,9 @@ public class Commandkick extends EssentialsCommand
 		}
 
 		final User target = getPlayer(server, args, 0, true, false);
-		if (sender instanceof Player)
+		if (sender.isPlayer())
 		{
-			User user = ess.getUser(sender);
+			User user = ess.getUser(sender.getPlayer());
 			if (target.isHidden() && !user.isAuthorized("essentials.vanish.interact"))
 			{
 				throw new PlayerNotFoundException();
@@ -44,7 +44,7 @@ public class Commandkick extends EssentialsCommand
 		kickReason = FormatUtil.replaceFormat(kickReason.replace("\\n", "\n").replace("|", "\n"));
 
 		target.kickPlayer(kickReason);
-		final String senderName = sender instanceof Player ? ((Player)sender).getDisplayName() : Console.NAME;
+		final String senderName = sender.isPlayer() ? sender.getPlayer().getDisplayName() : Console.NAME;
 
 		server.getLogger().log(Level.INFO, _("playerKicked", senderName, target.getName(), kickReason));
 		ess.broadcastMessage("essentials.kick.notify", _("playerKicked", senderName, target.getName(), kickReason));

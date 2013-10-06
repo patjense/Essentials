@@ -7,7 +7,7 @@ import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.StringUtil;
 import java.util.List;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 
 
 public class Commandspawnmob extends EssentialsCommand
@@ -43,7 +43,7 @@ public class Commandspawnmob extends EssentialsCommand
 		if (args.length >= 3)
 		{
 			final User target = getPlayer(ess.getServer(), user, args, 2);
-			SpawnMob.spawnmob(ess, server, user.getBase(), target, mobParts, mobData, mobCount);
+			SpawnMob.spawnmob(ess, server, user.getSource(), target, mobParts, mobData, mobCount);
 			return;
 		}
 		
@@ -51,7 +51,7 @@ public class Commandspawnmob extends EssentialsCommand
 	}
 	
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 3)
 		{

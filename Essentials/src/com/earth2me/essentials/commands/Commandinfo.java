@@ -5,7 +5,7 @@ import com.earth2me.essentials.textreader.KeywordReplacer;
 import com.earth2me.essentials.textreader.TextInput;
 import com.earth2me.essentials.textreader.TextPager;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 
 
 public class Commandinfo extends EssentialsCommand
@@ -16,7 +16,7 @@ public class Commandinfo extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		final IText input = new TextInput(sender, "info", true, ess);
 		final IText output = new KeywordReplacer(input, sender, ess);

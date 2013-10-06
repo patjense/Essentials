@@ -2,7 +2,7 @@ package com.earth2me.essentials.commands;
 
 import static com.earth2me.essentials.I18n._;
 import com.earth2me.essentials.User;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.Server;
 
 
@@ -28,7 +28,7 @@ public class Commandafk extends EssentialsCommand
 	}
 	
 	@Override
-	public void run(Server server, CommandSender sender, String commandLabel, String[] args) throws Exception
+	public void run(Server server, CommandSource sender, String commandLabel, String[] args) throws Exception
 	{
 		if (args.length > 0)
 		{

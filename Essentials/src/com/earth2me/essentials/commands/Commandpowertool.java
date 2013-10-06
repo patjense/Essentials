@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import org.bukkit.Material;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,11 +25,11 @@ public class Commandpowertool extends EssentialsCommand
 	{
 		final String command = getFinalArg(args, 0);
 		final ItemStack itemStack = user.getItemInHand();
-		powertool(server, user.getBase(), user, commandLabel, itemStack, command);
+		powertool(server, user.getSource(), user, commandLabel, itemStack, command);
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		if (args.length < 3) //running from console means inserting a player and item before the standard syntax
 		{
@@ -42,7 +42,7 @@ public class Commandpowertool extends EssentialsCommand
 		powertool(server, sender, user, commandLabel, itemStack, command);
 	}
 
-	protected void powertool(final Server server, final CommandSender sender, final User user, final String commandLabel, final ItemStack itemStack, String command) throws Exception
+	protected void powertool(final Server server, final CommandSource sender, final User user, final String commandLabel, final ItemStack itemStack, String command) throws Exception
 	{
 		// check to see if this is a clear all command
 		if (command != null && command.equalsIgnoreCase("d:"))
@@ -88,7 +88,7 @@ public class Commandpowertool extends EssentialsCommand
 			{
 				if (command.startsWith("a:"))
 				{
-					if (sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.powertool.append"))
+					if (sender.isPlayer() && !ess.getUser(sender.getPlayer()).isAuthorized("essentials.powertool.append"))
 					{
 						throw new Exception(_("noPerm", "essentials.powertool.append"));
 					}

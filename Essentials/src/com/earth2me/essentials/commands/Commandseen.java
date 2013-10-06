@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.entity.Player;
 
 
@@ -22,7 +22,7 @@ public class Commandseen extends EssentialsCommand
 	}
 
 	@Override
-	protected void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	protected void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		seen(server, sender, args, true, true, true);
 	}
@@ -30,10 +30,10 @@ public class Commandseen extends EssentialsCommand
 	@Override
 	protected void run(final Server server, final User user, final String commandLabel, final String[] args) throws Exception
 	{
-		seen(server, user.getBase(), args, user.isAuthorized("essentials.seen.banreason"), user.isAuthorized("essentials.seen.extra"), user.isAuthorized("essentials.seen.ipsearch"));
+		seen(server, user.getSource(), args, user.isAuthorized("essentials.seen.banreason"), user.isAuthorized("essentials.seen.extra"), user.isAuthorized("essentials.seen.ipsearch"));
 	}
 
-	protected void seen(final Server server, final CommandSender sender, final String[] args, final boolean showBan, final boolean extra, final boolean ipLookup) throws Exception
+	protected void seen(final Server server, final CommandSource sender, final String[] args, final boolean showBan, final boolean extra, final boolean ipLookup) throws Exception
 	{
 		if (args.length < 1)
 		{
@@ -67,7 +67,7 @@ public class Commandseen extends EssentialsCommand
 		}
 	}
 
-	private void seenOnline(final Server server, final CommandSender sender, final User user, final boolean showBan, final boolean extra) throws Exception
+	private void seenOnline(final Server server, final CommandSource sender, final User user, final boolean showBan, final boolean extra) throws Exception
 	{
 
 		user.setDisplayNick();
@@ -89,7 +89,7 @@ public class Commandseen extends EssentialsCommand
 												: _("true"))));
 		}
 		final String location = user.getGeoLocation();
-		if (location != null && (!(sender instanceof Player) || ess.getUser(sender).isAuthorized("essentials.geoip.show")))
+		if (location != null && (!(sender.isPlayer()) || ess.getUser(sender.getPlayer()).isAuthorized("essentials.geoip.show")))
 		{
 			sender.sendMessage(_("whoisGeoLocation", location));
 		}
@@ -99,7 +99,7 @@ public class Commandseen extends EssentialsCommand
 		}
 	}
 
-	private void seenOffline(final Server server, final CommandSender sender, User user, final boolean showBan, final boolean extra) throws Exception
+	private void seenOffline(final Server server, final CommandSource sender, User user, final boolean showBan, final boolean extra) throws Exception
 	{
 		user.setDisplayNick();
 		if (user.getLastLogout() > 0)
@@ -115,7 +115,7 @@ public class Commandseen extends EssentialsCommand
 			sender.sendMessage(_("whoisBanned", showBan ? user.getBanReason() : _("true")));
 		}
 		final String location = user.getGeoLocation();
-		if (location != null && (!(sender instanceof Player) || ess.getUser(sender).isAuthorized("essentials.geoip.show")))
+		if (location != null && (!(sender.isPlayer()) || ess.getUser(sender.getPlayer()).isAuthorized("essentials.geoip.show")))
 		{
 			sender.sendMessage(_("whoisGeoLocation", location));
 		}
@@ -133,7 +133,7 @@ public class Commandseen extends EssentialsCommand
 		}
 	}
 
-	private void seenIP(final Server server, final CommandSender sender, final String ipAddress) throws Exception
+	private void seenIP(final Server server, final CommandSource sender, final String ipAddress) throws Exception
 	{
 		final UserMap userMap = ess.getUserMap();
 

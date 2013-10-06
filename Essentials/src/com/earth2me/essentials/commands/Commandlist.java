@@ -7,7 +7,7 @@ import com.earth2me.essentials.utils.FormatUtil;
 import com.earth2me.essentials.utils.NumberUtil;
 import java.util.*;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import com.earth2me.essentials.CommandSource;
 import org.bukkit.entity.Player;
 
 
@@ -19,12 +19,12 @@ public class Commandlist extends EssentialsCommand
 	}
 
 	@Override
-	public void run(final Server server, final CommandSender sender, final String commandLabel, final String[] args) throws Exception
+	public void run(final Server server, final CommandSource sender, final String commandLabel, final String[] args) throws Exception
 	{
 		boolean showHidden = true;
-		if (sender instanceof Player)
+		if (sender.isPlayer())
 		{
-			showHidden = ess.getUser(sender).isAuthorized("essentials.list.hidden") || ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+			showHidden = ess.getUser(sender.getPlayer()).isAuthorized("essentials.list.hidden") || ess.getUser(sender.getPlayer()).isAuthorized("essentials.vanish.interact");
 		}
 		sender.sendMessage(PlayerList.listSummary(ess, showHidden));
 		final Map<String, List<User>> playerList = PlayerList.getPlayerLists(ess, showHidden);
@@ -40,7 +40,7 @@ public class Commandlist extends EssentialsCommand
 	}
 
 	// Output the standard /list output, when no group is specified
-	private void sendGroupedList(CommandSender sender, String commandLabel, Map<String, List<User>> playerList)
+	private void sendGroupedList(CommandSource sender, String commandLabel, Map<String, List<User>> playerList)
 	{
 		final Set<String> configGroups = ess.getSettings().getListGroupConfig().keySet();
 		final List<String> asterisk = new ArrayList<String>();
